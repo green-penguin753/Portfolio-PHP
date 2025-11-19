@@ -1,6 +1,4 @@
 <?php
-
-
 /** 
  * 本課題は九九の掛け算表を表示するために81までの数字を順番に表示するプログラムです。
  * 以下のように九九の掛け算表を整然と表示させてください。
@@ -18,54 +16,48 @@
 
 function multiplication()
 {
-
-    for ($i = 1; $i <= 9; $i++) {
-        for ($j = 1; $j <= 9; $j++) {
-            $product = $i * $j;
-            if ($product <= 9) {
-                echo "*";
-            }
-            echo "*";
-            if (primeNumber($product)) {
-                echo '<font color="red">' . $product . '</font>';
-            } else {
-                echo $product;
-            }
-        }
-        echo '<br>';
+  for ($i = 1; $i <= 9; $i++) {
+    for ($j = 1; $j <= 9; $j++) {
+      $product = $i * $j;
+      if ($product <= 9) {
+        echo "*";
+      }
+        echo "*";
+      if (primeNumber($product)) {
+        echo '<font color="red">' . $product . '</font>';
+      } else {
+        echo $product;
+      }
     }
+    echo '<br>';
+  }
 }
 
 function primeNumber($product)
 {
-    if ($product == 1) {
-        return false;
+  if ($product == 1) {
+    return false;
+  }
+  for ($i = 2; $i < $product; $i++) {
+    if ($product % $i == 0) {
+      return false;
     }
-    for ($i = 2; $i < $product; $i++) {
-        if ($product % $i == 0) {
-            return false;
-        }
-    }
-    return true;
+  }
+  return true;
 }
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
+  <head>
     <meta charset="utf-8">
     <title>九九計算表の表示プログラム</title>
-</head>
-
-<body>
+  </head>
+  <body>
     <section>
-        <?php
-        multiplication();
-        ?>
+      <?php
+      multiplication();
+      ?>
     </section>
-</body>
-
+  </body>
 </html>

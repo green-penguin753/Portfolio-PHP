@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * おつりを計算するプログラムを作成して頂きます。
  * 引数には支払金額であるpurchaseと購入金額のproductを使用します。
@@ -27,42 +25,33 @@ $purchase = 10000;
 // 購入金額
 $product = 200;
 
-
-
-
-function calculation($purchase, $product)
-{
-
-    if ($purchase < $product) {
-        return $product - $purchase . '円不足';
+function calculation($purchase, $product) {
+  if ($purchase < $product) {
+    return $product - $purchase . '円不足';
+  }
+  if ($product <= $purchase) {
+    $change = $purchase - $product;
+    $money = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
+    $result = "";
+    for ($i = 0; $i < count($money); $i++) {
+      $result .= $money[$i] . '円札が' . floor(($change % ($i > 0 ? $money[$i - 1] : 1)) / $money[$i]) . "枚<br>";
     }
-
-    if ($product <= $purchase) {
-        $change = $purchase - $product;
-        $money = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
-        $result = "";
-
-        for ($i = 0; $i < count($money); $i++) {
-            $result .= $money[$i] . '円札が' . floor(($change % ($i > 0 ? $money[$i - 1] : 1)) / $money[$i]) . "枚<br>";
-        }
-    }
-    return $result;
+  }
+  return $result;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
+  <head>
     <meta charset="utf-8">
     <title>お釣り計算プログラム</title>
-</head>
-
-<body>
+  </head>
+  <body>
     <section>
-        <?php
-        echo calculation($purchase, $product);
-        ?>
+      <?php
+      echo calculation($purchase, $product);
+      ?>
     </section>
 </body>
 

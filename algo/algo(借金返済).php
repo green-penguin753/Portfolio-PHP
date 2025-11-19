@@ -1,6 +1,4 @@
 <?php
-
-
 /* 
  * 引数で与えられた 元金、年数、年利率 を元に 支払総額、全月分の月ごとの支払額 を
  * 出力するプログラムを作成せよ(返済法は分割返済とする)。
@@ -22,53 +20,40 @@ $year = 1;
 // 初期年利率(%)
 $rate = 1;
 
-
-
-
-
-
 function pays()
 {
-
-    global $principal;
-    global $year;
-    global $rate;
-
-    $month = $year * 12;
-    $monthlyPayment = round($principal / $month);
-    for ($i = 0; $i < $month; $i++) {
-        $interestExpense = round($principal * ($rate / 100 / 12));
-        $principal -= $monthlyPayment;
-        $monthlyPrincipal = $monthlyPayment + $interestExpense;
-        $pays[] = $monthlyPrincipal;
-    }
-    return $pays;
+  global $principal;
+  global $year;
+  global $rate;
+  $month = $year * 12;
+  $monthlyPayment = round($principal / $month);
+  for ($i = 0; $i < $month; $i++) {
+    $interestExpense = round($principal * ($rate / 100 / 12));
+    $principal -= $monthlyPayment;
+    $monthlyPrincipal = $monthlyPayment + $interestExpense;
+    $pays[] = $monthlyPrincipal;
+  }
+  return $pays;
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
+  <head>
     <meta charset="utf-8">
     <title>借金返済プログラム</title>
-</head>
-
-<body>
+  </head>
+  <body>
     <section>
-
-        <?php
+      <?php
         $i = 0;
         $sum = 0;
-
         foreach (pays() as $pay) {
-            echo ++$i . "か月目の支払金額：" . $pay . "円<br>";
+          echo ++$i . "か月目の支払金額：" . $pay . "円<br>";
             $sum += $pay;
         }
         echo "支払総額：" . $sum . "円";
-        ?>
+      ?>
     </section>
-</body>
-
+  </body>
 </html>

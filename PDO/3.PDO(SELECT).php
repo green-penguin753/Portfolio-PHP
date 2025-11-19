@@ -5,22 +5,16 @@
 // var_dumpを用いて画面に出力するコードを作成してください。
 
 try {
-    $dsn = 'mysql:host=mysql;dbname=neelab;charset=utf8';
-    $db = new PDO($dsn, 'neelabuser', 'p4ssw0rd');
-
-    $sql = 'SELECT * FROM users';
-
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
-
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    var_dump($rows);
-
-    echo "sql実行成功<br>";
+  $dsn = 'mysql:host=mysql;dbname=neelab;charset=utf8';
+  $db = new PDO($dsn, 'neelabuser', 'p4ssw0rd');
+  $sql = 'SELECT * FROM users';
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  var_dump($rows);
+  echo "sql実行成功<br>";
 } catch (PDOException $e) {
-    echo $e->getMessage();
-    exit;
+  echo $e->getMessage();
+  exit;
 }
-
 $db = null;
