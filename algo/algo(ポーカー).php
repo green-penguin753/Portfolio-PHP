@@ -13,48 +13,42 @@
 
 // 手札の設定
 $suits_order = ["spade", "heart", "diamond", "club"];
-$cards = [];
 
-cardsSet();
+$cards = cardsSet($suits_order);
+
 usort($cards, 'compare_cards');
 
-function cardsSet() {
-  global $suits_order;
-  global $cards;
-  $i = 1;
-  $numbers = [];
-  while ($i<=5):
-  $numbers[] = rand(1, 13);
-  $i++;
-  endwhile;
-  $cards = [];
-  for ($i=0; $i<5; $i++){
-    $cards[] = ['suit'=> $suits_order[array_rand($suits_order)], 
-    'number' => $numbers[array_rand($numbers)]];
-  }
+function cardsSet($suits_order) {
+    $deck = [];
+    foreach ($suits_order as $suit) {
+        for ($number = 1; $number <= 13; $number++) {
+            $deck[] = ['suit' => $suit, 'number' => $number];
+        }
+    }
+    shuffle($deck);
+    return array_slice($deck, 0, 5);
 }
 
 //不正チェック関数
 function check($cards) {
-  $uniqueCards = array_unique($cards, SORT_REGULAR);
-  if (count($cards) != count($uniqueCards)) {
-    return true;
-  }
-  return false;
+    $seen = [];
+    foreach ($cards as $c) {
+        $key = $c['suit'] . '-' . $c['number'];
+        if (isset($seen[$key])) return true;
+        $seen[$key] = true;
+    }
+    return false;
 }
 
 // カードの並び替えを行う。
 function compare_cards($a, $b) {
-  global $suits_order;
-  if ($a['number'] == $b['number']){
-    if ($a['suit'] == $b['suit']){
-      return 0;
+    global $suits_order;
+
+    if ($a['number'] === $b['number']) {
+        return array_search($a['suit'], $suits_order) - array_search($b['suit'], $suits_order);
     } else {
-      return array_search($a['suit'], $suits_order) > array_search($b['suit'], $suits_order) ? 1 : -1;
-    } else {
-      return $a['number'] > $b['number'] ? 1 : -1;
+        return $a['number'] - $b['number'];
     }
-  }
 }
 
 //役判定
